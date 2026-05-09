@@ -82,7 +82,7 @@ pub const Systray = struct {
             0,
             0,
             1,
-            @intCast(bar_height),
+            @intCast(bar_height - 2),
             0,
             0,
             0,
@@ -418,7 +418,7 @@ pub const Systray = struct {
         }
 
         const total_width: u32 = if (x > 0) @intCast(x) else 1;
-        _ = xlib.c.XResizeWindow(self.display, self.window, total_width, @intCast(self.bar_height));
+        _ = xlib.c.XResizeWindow(self.display, self.window, total_width, @intCast(self.bar_height - 2));
         _ = xlib.XSync(self.display, xlib.False);
     }
 
