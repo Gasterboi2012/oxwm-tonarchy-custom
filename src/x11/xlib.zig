@@ -282,5 +282,4 @@ pub const XSetSelectionOwner = c.XSetSelectionOwner;
 pub const XGetSelectionOwner = c.XGetSelectionOwner;
 pub const XA_CARDINAL = c.XA_CARDINAL;
 pub const XReparentEvent = c.XReparentEvent;
-pub const XConfigureEvent = c.XConfigureEvent;
 pub const XResizeRequestEvent = c.XResizeRequestEvent;
