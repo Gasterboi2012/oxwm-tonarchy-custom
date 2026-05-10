@@ -31,6 +31,8 @@ pub fn spawnCommand(wm: *WindowManager, cmd: []const u8) void {
     std.debug.print("running cmd: {s}\n", .{cmd});
     const pid = std.posix.fork() catch return;
     if (pid == 0) {
+        const grandchild = std.posix.fork() catch std.posix.exit(1);
+        if (grandchild != 0) std.posix.exit(0);
         spawnChildSetup(wm);
         var cmd_buf: [1024]u8 = undefined;
         if (cmd.len >= cmd_buf.len) {
@@ -42,11 +44,14 @@ pub fn spawnCommand(wm: *WindowManager, cmd: []const u8) void {
         _ = std.posix.execvpeZ("sh", &argv, std.c.environ) catch {};
         std.posix.exit(1);
     }
+    _ = std.posix.waitpid(pid, 0);
 }
 
 pub fn spawnTerminal(wm: *WindowManager) void {
     const pid = std.posix.fork() catch return;
     if (pid == 0) {
+        const grandchild = std.posix.fork() catch std.posix.exit(1);
+        if (grandchild != 0) std.posix.exit(0);
         spawnChildSetup(wm);
         var term_buf: [256]u8 = undefined;
         const terminal = wm.config.terminal;
@@ -60,6 +65,7 @@ pub fn spawnTerminal(wm: *WindowManager) void {
         _ = std.posix.execvpeZ(term_ptr, &argv, std.c.environ) catch {};
         std.posix.exit(1);
     }
+    _ = std.posix.waitpid(pid, 0);
 }
 
 pub fn movestack(direction: i32, wm: *WindowManager) void {
