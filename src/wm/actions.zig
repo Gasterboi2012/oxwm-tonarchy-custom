@@ -69,6 +69,7 @@ pub fn spawnTerminal(wm: *WindowManager) void {
 }
 
 pub fn movestack(direction: i32, wm: *WindowManager) void {
+    if (direction == 0) return;
     const monitor = wm.selected_monitor orelse return;
     const current = monitor.sel orelse return;
 
@@ -289,6 +290,7 @@ pub fn tagClient(tag_mask: u32, wm: *WindowManager) void {
 }
 
 pub fn focusstack(direction: i32, wm: *WindowManager) void {
+    if (direction == 0) return;
     const monitor = wm.selected_monitor orelse return;
     const current = monitor.sel orelse return;
 
