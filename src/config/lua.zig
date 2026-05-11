@@ -590,14 +590,18 @@ fn luaClientToggleFloating(state: ?*c.lua_State) callconv(.c) c_int {
 
 fn luaClientFocusStack(state: ?*c.lua_State) callconv(.c) c_int {
     const s = state orelse return 0;
-    const dir: i32 = @intCast(c.lua_tointegerx(s, 1, null));
+    var isnum: c_int = 0;
+    const raw = c.lua_tointegerx(s, 1, &isnum);
+    const dir: i32 = if (isnum != 0) @intCast(raw) else 1;
     createActionTableWithInt(s, "FocusStack", dir);
     return 1;
 }
 
 fn luaClientMoveStack(state: ?*c.lua_State) callconv(.c) c_int {
     const s = state orelse return 0;
-    const dir: i32 = @intCast(c.lua_tointegerx(s, 1, null));
+    var isnum: c_int = 0;
+    const raw = c.lua_tointegerx(s, 1, &isnum);
+    const dir: i32 = if (isnum != 0) @intCast(raw) else 1;
     createActionTableWithInt(s, "MoveStack", dir);
     return 1;
 }

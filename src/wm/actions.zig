@@ -69,6 +69,7 @@ pub fn spawnTerminal(wm: *WindowManager) void {
 }
 
 pub fn movestack(direction: i32, wm: *WindowManager) void {
+    if (direction == 0) return;
     const monitor = wm.selected_monitor orelse return;
     const current = monitor.sel orelse return;
 
@@ -289,6 +290,7 @@ pub fn tagClient(tag_mask: u32, wm: *WindowManager) void {
 }
 
 pub fn focusstack(direction: i32, wm: *WindowManager) void {
+    if (direction == 0) return;
     const monitor = wm.selected_monitor orelse return;
     const current = monitor.sel orelse return;
 
@@ -797,9 +799,9 @@ pub fn executeAction(action: config_mod.Action, int_arg: i32, str_arg: ?[]const 
                 }
             }
         },
-        .focus_next => focusstack(1, wm),
+        .focus_next => focusstack(int_arg, wm),
         .focus_prev => focusstack(-1, wm),
-        .move_next => movestack(1, wm),
+        .move_next => movestack(int_arg, wm),
         .move_prev => movestack(-1, wm),
         .resize_master => setmfact(@as(f32, @floatFromInt(int_arg)) / 1000.0, wm),
         .inc_master => incnmaster(1, wm),
