@@ -108,6 +108,10 @@ oxwm.key.bind({ modkey }, "Period", oxwm.monitor.focus(1))
 oxwm.key.bind({ modkey, "Shift" }, "Comma", oxwm.monitor.tag(-1))
 oxwm.key.bind({ modkey, "Shift" }, "Period", oxwm.monitor.tag(1))
 
+oxwm.key.bind({}, "XF86AudioRaiseVolume", oxwm.spawn({ "sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ +5%" }))
+oxwm.key.bind({}, "XF86AudioLowerVolume", oxwm.spawn({ "sh", "-c", "pactl set-sink-volume @DEFAULT_SINK@ -5%" }))
+oxwm.key.bind({}, "XF86AudioMute", oxwm.spawn({ "sh", "-c", "pactl set-sink-mute @DEFAULT_SINK@ toggle" }))
+
 oxwm.key.bind({ modkey }, "1", oxwm.tag.view(0))
 oxwm.key.bind({ modkey }, "2", oxwm.tag.view(1))
 oxwm.key.bind({ modkey }, "3", oxwm.tag.view(2))
